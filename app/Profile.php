@@ -14,4 +14,9 @@ class Profile extends Model
     protected $fillable = [
         'name', 'text'
     ];
+
+    public function User()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
