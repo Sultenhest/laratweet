@@ -12,11 +12,11 @@ class StatusPolicy
 
     public function update(User $user, Status $status)
     {
-        return $user->id === $status->user_id;
+        return $user->is($status->user);
     }
 
     public function delete(User $user, Status $status)
     {
-        return $user->id === $status->user_id;
+        return $user->is($status->user);
     }
 }
