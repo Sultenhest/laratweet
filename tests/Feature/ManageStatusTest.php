@@ -6,11 +6,10 @@ use App\Status;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ManageStatusTest extends TestCase
 {
-    use WithFaker, RefreshDatabase, DatabaseMigrations;
+    use WithFaker, RefreshDatabase;
 
     /** @test */
     public function guests_cannot_manage_statuses()
