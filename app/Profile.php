@@ -12,7 +12,7 @@ class Profile extends Model
 
     public function path()
     {
-        return "/profile/{$this->profile->id}";
+        return "/profile/{$this->id}";
     }
 
     public function user()

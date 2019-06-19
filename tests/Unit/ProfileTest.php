@@ -10,8 +10,14 @@ class ProfileTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function it_has_a_profile()
+    public function test_a_profile_has_a_path()
+    {
+        $profile = factory('App\Profile')->create();
+
+        $this->assertEquals("/profile/{$profile->id}", $profile->path());
+    }
+
+    public function test_a_profile_has_a_user()
     {
         $profile = factory('App\Profile')->create();
 
