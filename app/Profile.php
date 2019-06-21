@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     protected $fillable = [
-        'name', 'bio'
+        'name', 'username', 'bio'
     ];
 
     public function getRouteKeyName()

@@ -48,9 +48,7 @@ class ProfileController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'name' => 'sometimes|required',
-            'username' => 'sometimes|required',
-            'bio' => 'sometimes|required'
+            'name' => 'sometimes|required'
         ]);
     }
 }
