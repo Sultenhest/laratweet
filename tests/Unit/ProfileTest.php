@@ -23,4 +23,11 @@ class ProfileTest extends TestCase
 
         $this->assertInstanceOf('App\User', $profile->user);
     }
+
+    public function test_a_profile_has_a_username()
+    {
+        $profile = factory('App\Profile')->create();
+
+        $this->assertNotNull($profile->username);
+    }
 }
