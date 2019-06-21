@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     protected $fillable = [
-        'name', 'body'
+        'name', 'bio'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
 
     public function path()
     {
-        return "/profile/{$this->id}";
+        return "/profile/{$this->username}";
     }
 
     public function user()

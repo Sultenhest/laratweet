@@ -24,8 +24,8 @@ class ManageProfileTest extends TestCase
 
         $this->actingAs($profile->user)
             ->patch($profile->path(), $attributes = [
-                'name' => $this->faker->username,
-                'body' => $this->faker->paragraph
+                'name' => $this->faker->name,
+                'bio' => $this->faker->paragraph
             ])
             ->assertRedirect($profile->path());
 

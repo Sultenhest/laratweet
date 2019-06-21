@@ -49,7 +49,8 @@ class ProfileController extends Controller
     {
         return request()->validate([
             'name' => 'sometimes|required',
-            'body' => 'sometimes|required'
+            'username' => 'sometimes|required',
+            'bio' => 'sometimes|required'
         ]);
     }
 }

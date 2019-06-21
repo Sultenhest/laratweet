@@ -70,7 +70,7 @@ class RegisterController extends Controller
         ]);
 
         $user->profile()->create([
-            'name' => $data['email']
+            'username' => $data['email']
         ]);
 
         return $user;
