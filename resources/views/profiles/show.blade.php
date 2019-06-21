@@ -1,2 +1,3 @@
 {{ $profile->name }}
-{{ $profile->body }}
+{{ $profile->username }}
+{{ $profile->bio }}
