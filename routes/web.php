@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('status', 'StatusController');
 
+    Route::post('/status/{status}/like', 'StatusController@like');
+
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::get('/profile/{profile}/edit', 'ProfileController@edit');
     Route::patch('/profile/{profile}', 'ProfileController@update');

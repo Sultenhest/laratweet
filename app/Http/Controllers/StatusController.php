@@ -101,4 +101,11 @@ class StatusController extends Controller
             'body' => 'sometimes|required'
         ]);
     }
+
+    public function like(Status $status)
+    {
+        auth()->user()->likes()->toggle($status);
+
+        return redirect($status->path());
+    }
 }

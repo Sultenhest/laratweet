@@ -19,4 +19,14 @@ class Status extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes')->latest('created_at');
+    }
+
+    public function isLiked() {
+        $like = $this->likes()->whereUserId( Auth::id() )->first();
+        return  !is_null($like) ? true : false;
+    }
 }

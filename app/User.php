@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Status::class)->latest('updated_at');
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(Status::class, 'likes')->latest('created_at');
+    }
 }
