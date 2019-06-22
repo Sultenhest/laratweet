@@ -20,6 +20,8 @@ class ManageLikeTest extends TestCase
 
         $response->assertRedirect($status->path());
 
+        $this->assertEquals(1, $status->likes());
+
         $this->assertDatabaseHas('likes', [
             'user_id' => $user->id,
             'status_id' => $status->id
@@ -28,6 +30,8 @@ class ManageLikeTest extends TestCase
         $response = $this->post($status->path() . '/like');
 
         $response->assertRedirect($status->path());
+
+        $this->assertEquals(0, $status->likes());
 
         $this->assertDatabaseMissing('likes', [
             'user_id' => $user->id,
@@ -39,6 +43,10 @@ class ManageLikeTest extends TestCase
     {
         $status = factory('App\Status')->create();
 
+        $this->assertEquals(0, $status->likes());
+
         $this->post($status->path() . '/like')->assertRedirect('/login');
+
+        $this->assertEquals(0, $status->likes());
     }
 }
