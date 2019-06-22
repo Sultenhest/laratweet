@@ -25,7 +25,8 @@ class Status extends Model
         return $this->belongsToMany(User::class, 'likes')->latest('created_at');
     }
 
-    public function isLiked() {
+    public function isLiked()
+    {
         $like = $this->likes()->whereUserId( Auth::id() )->first();
         return  !is_null($like) ? true : false;
     }
