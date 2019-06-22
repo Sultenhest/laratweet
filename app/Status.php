@@ -22,7 +22,7 @@ class Status extends Model
 
     public function likes()
     {
-        return $this->belongsToMany(User::class, 'likes')->latest('created_at');
+        return $this->belongsToMany(User::class, 'likes')->count();
     }
 
     public function isLiked()
