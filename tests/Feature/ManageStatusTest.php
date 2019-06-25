@@ -17,6 +17,7 @@ class ManageStatusTest extends TestCase
         $status = factory('App\Status')->create();
 
         $this->post('/status', $status->toArray())->assertRedirect('login');
+        $this->post($status->path() . '/reply', $status->toArray())->assertRedirect('login');
         $this->get('/status')->assertRedirect('login');
         $this->get('/status/create')->assertRedirect('login');
         $this->get($status->path())->assertRedirect('login');
@@ -73,7 +74,7 @@ class ManageStatusTest extends TestCase
     }
 
     /** @test */
-    public function an_authenitcated_user_can_see_a_status_of_others()
+    public function an_authenticated_user_can_see_a_status_of_others()
     {
         $this->signIn();
 
@@ -83,7 +84,7 @@ class ManageStatusTest extends TestCase
     }
 
     /** @test */
-    public function an_authenitcated_user_cannot_update_statuses_of_others()
+    public function an_authenticated_user_cannot_update_statuses_of_others()
     {
         $this->signIn();
 
@@ -93,7 +94,7 @@ class ManageStatusTest extends TestCase
     }
 
     /** @test */
-    public function an_authenitcated_user_cannot_delete_statuses_of_others()
+    public function an_authenticated_user_cannot_delete_statuses_of_others()
     {
         $this->signIn();
 
@@ -110,5 +111,24 @@ class ManageStatusTest extends TestCase
         $attributes = factory('App\Status')->raw(['body' => '']);
 
         $this->post('/status', $attributes)->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function a_status_can_get_replies()
+    {
+        $this->withoutExceptionHandling();
+
+        $status = factory('App\Status')->create();
+
+        $user = $this->signIn();
+
+        $attributes = ['body' => $this->faker->sentence];
+
+        $response = $this->actingAs($user)
+            ->post($status->path() . '/reply', $attributes);
+
+        $this->assertDatabaseHas('statuses', $attributes);
+
+        $this->get($status->path())->assertSee($attributes['body']);
     }
 }

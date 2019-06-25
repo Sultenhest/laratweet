@@ -30,4 +30,14 @@ class Status extends Model
         $like = $this->likes()->whereUserId( Auth::id() )->first();
         return  !is_null($like) ? true : false;
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Status::class);
+    }
 }

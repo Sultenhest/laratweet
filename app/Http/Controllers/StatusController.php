@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class StatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $statuses = auth()->user()->statuses;
@@ -19,59 +14,29 @@ class StatusController extends Controller
         return view('statuses.index', compact('statuses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('statuses.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
         $status = auth()->user()->statuses()->create($this->validateRequest());
 
         return redirect($status->path());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
     public function show(Status $status)
     {
         return view('statuses.show', compact('status'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Status $status)
     {
         return view('statuses.edit', compact('status'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Status $status)
+    public function update(Status $status)
     {
         $this->authorize('update', $status);
 
@@ -80,12 +45,6 @@ class StatusController extends Controller
         return redirect($status->path());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Status  $status
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Status $status)
     {
         $this->authorize('delete', $status);
@@ -95,17 +54,27 @@ class StatusController extends Controller
         return redirect("/");
     }
 
-    protected function validateRequest()
-    {
-        return request()->validate([
-            'body' => 'sometimes|required'
-        ]);
-    }
-
     public function like(Status $status)
     {
         auth()->user()->likes()->toggle($status);
 
         return redirect($status->path());
+    }
+
+    public function reply(Status $status)
+    {
+        $child = new Status($this->validateRequest());
+        $child->user_id = auth()->user()->id;
+
+        $status->replies()->save($child);
+
+        return redirect($status->path());
+    }
+
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'body' => 'sometimes|required'
+        ]);
     }
 }

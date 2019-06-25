@@ -18,8 +18,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('status', 'StatusController');
 
-    Route::post('/status/{status}/reply', 'StatusController@reply');
     Route::post('/status/{status}/like', 'StatusController@like');
+    Route::post('/status/{status}/reply', 'StatusController@reply');
 
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::get('/profile/{profile}/edit', 'ProfileController@edit');
