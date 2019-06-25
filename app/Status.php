@@ -22,13 +22,13 @@ class Status extends Model
 
     public function likes()
     {
-        return $this->belongsToMany(User::class, 'likes')->count();
+        return $this->belongsToMany(User::class, 'likes');
     }
 
     public function isLiked()
     {
-        $like = $this->likes()->whereUserId( Auth::id() )->first();
-        return  !is_null($like) ? true : false;
+        $like = $this->likes()->whereUserId( auth()->user()->id )->get();
+        return !is_null($like) ? true : false;
     }
 
     public function parent()

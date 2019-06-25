@@ -20,33 +20,37 @@ class ManageLikeTest extends TestCase
 
         $response->assertRedirect($status->path());
 
-        $this->assertEquals(1, $status->likes());
+        $this->assertEquals(1, $status->likes()->count());
 
         $this->assertDatabaseHas('likes', [
             'user_id' => $user->id,
             'status_id' => $status->id
         ]);
 
+        $this->assertTrue($status->isLiked());
+
         $response = $this->post($status->path() . '/like');
 
         $response->assertRedirect($status->path());
 
-        $this->assertEquals(0, $status->likes());
+        $this->assertEquals(0, $status->likes()->count());
 
         $this->assertDatabaseMissing('likes', [
             'user_id' => $user->id,
             'status_id' => $status->id
         ]);
+
+        $this->assertTrue($status->isLiked());
     }
 
     public function test_a_guest_cannot_like_a_status()
     {
         $status = factory('App\Status')->create();
 
-        $this->assertEquals(0, $status->likes());
+        $this->assertEquals(0, $status->likes()->count());
 
         $this->post($status->path() . '/like')->assertRedirect('/login');
 
-        $this->assertEquals(0, $status->likes());
+        $this->assertEquals(0, $status->likes()->count());
     }
 }
