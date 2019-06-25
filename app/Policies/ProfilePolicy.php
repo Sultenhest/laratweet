@@ -14,4 +14,9 @@ class ProfilePolicy
     {
         return $user->is($profile->user);
     }
+
+    public function canFollow(User $user, Profile $profile)
+    {
+        return $user->isNot($profile->user);
+    }
 }

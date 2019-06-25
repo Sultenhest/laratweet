@@ -18,11 +18,13 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('status', 'StatusController');
 
+    Route::post('/status/{status}/reply', 'StatusController@reply');
     Route::post('/status/{status}/like', 'StatusController@like');
 
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::get('/profile/{profile}/edit', 'ProfileController@edit');
     Route::patch('/profile/{profile}', 'ProfileController@update');
+    Route::post('/profile/{profile}/follow', 'ProfileController@follow');
 
     Route::get('/home', 'HomeController@index')->name('home');
 });

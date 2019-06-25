@@ -7,40 +7,32 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Profile $profile)
     {
         return view('profiles.show', compact('profile'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Profile $profile)
     {
         return view('profiles.edit', compact('profile'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Profile $profile)
+    public function update(Profile $profile)
     {
         $this->authorize('update', $profile);
 
         $profile->update($this->validateRequest());
+
+        return redirect($profile->path());
+    }
+
+    public function follow(Profile $profile)
+    {
+        $this->authorize('canFollow', $profile);
+
+        $user = $profile->user;
+
+        auth()->user()->following()->toggle($user);
 
         return redirect($profile->path());
     }
