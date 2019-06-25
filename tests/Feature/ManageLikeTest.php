@@ -10,7 +10,7 @@ class ManageLikeTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    public function test_an_authenitcated_user_can_like_and_unlike_a_status()
+    public function test_an_authenticated_user_can_like_and_unlike_a_status()
     {
         $user = $this->signIn();
 

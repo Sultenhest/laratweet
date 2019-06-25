@@ -34,7 +34,7 @@ class ManageProfileTest extends TestCase
         $this->assertDatabaseHas('profiles', $attributes);
     }
 
-    public function test_an_authenitcated_user_can_see_a_profile_of_others()
+    public function test_an_authenticated_user_can_see_a_profile_of_others()
     {
         $this->signIn();
 
@@ -43,7 +43,7 @@ class ManageProfileTest extends TestCase
         $this->get($profile->path())->assertOk();
     }
 
-    public function test_an_authenitcated_user_cannot_update_other_profiles()
+    public function test_an_authenticated_user_cannot_update_other_profiles()
     {
         $this->signIn();
 
