@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('status', 'StatusController');
 
+    Route::patch('/status/{status}/pin', 'StatusController@pin');
     Route::post('/status/{status}/like', 'StatusController@like');
     Route::post('/status/{status}/reply', 'StatusController@reply');
 

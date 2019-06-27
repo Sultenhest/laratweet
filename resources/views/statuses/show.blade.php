@@ -11,3 +11,9 @@
 @if ($status->parent)
     {{ $status->parent }}
 @endif
+
+@if ($status->pinned)
+    Unpin
+@else
+    Pin
+@endif

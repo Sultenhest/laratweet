@@ -18,6 +18,7 @@ class CreateStatusesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('status_id')->nullable();
             $table->text('body');
+            $table->boolean('pinned')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

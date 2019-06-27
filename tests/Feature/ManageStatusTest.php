@@ -22,6 +22,7 @@ class ManageStatusTest extends TestCase
         $this->get('/status/create')->assertRedirect('login');
         $this->get($status->path())->assertRedirect('login');
         $this->get($status->path().'/edit')->assertRedirect('login');
+        $this->patch($status->path())->assertRedirect('login');
     }
 
     /** @test */
