@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Tag;
 use App\Status;
 use Illuminate\Http\Request;
+use App\Events\StatusCreated;
+use App\Events\StatusDeleted;
 
 class StatusController extends Controller
 {
@@ -25,6 +27,8 @@ class StatusController extends Controller
         $status = auth()->user()->statuses()->create($this->validateRequest());
 
         $this->syncTags($request, $status);
+
+        event(new StatusCreated(auth()->user()));
 
         return redirect($status->path());
     }
@@ -56,6 +60,8 @@ class StatusController extends Controller
 
         $status->delete();
 
+        event(new StatusDeleted(auth()->user()));
+
         return redirect("/");
     }
 
@@ -79,10 +85,12 @@ class StatusController extends Controller
 
     public function reply(Status $status)
     {
-        $child = new Status($this->validateRequest());
-        $child->user_id = auth()->user()->id;
+        $reply = new Status($this->validateRequest());
+        $reply->user_id = auth()->id();
 
-        $status->replies()->save($child);
+        $status->replies()->save($reply);
+
+        event(new StatusCreated(auth()->user()));
 
         return redirect($status->path());
     }
