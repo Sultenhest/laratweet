@@ -40,4 +40,9 @@ class Status extends Model
     {
         return $this->hasMany(Status::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
 }

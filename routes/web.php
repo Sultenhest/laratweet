@@ -21,6 +21,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/status/{status}/like', 'StatusController@like');
     Route::post('/status/{status}/reply', 'StatusController@reply');
 
+    Route::get('/tag', 'TagController@index');
+    Route::get('/tag/{tag}', 'TagController@show');
+
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::get('/profile/{profile}/edit', 'ProfileController@edit');
     Route::patch('/profile/{profile}', 'ProfileController@update');

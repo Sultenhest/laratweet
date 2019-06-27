@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Status;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,11 @@ class StatusController extends Controller
         return view('statuses.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $status = auth()->user()->statuses()->create($this->validateRequest());
+
+        $this->syncTags($request, $status);
 
         return redirect($status->path());
     }
@@ -36,11 +39,13 @@ class StatusController extends Controller
         return view('statuses.edit', compact('status'));
     }
 
-    public function update(Status $status)
+    public function update(Request $request, Status $status)
     {
         $this->authorize('update', $status);
 
         $status->update($this->validateRequest());
+
+        $this->syncTags($request, $status);
 
         return redirect($status->path());
     }
@@ -71,10 +76,20 @@ class StatusController extends Controller
         return redirect($status->path());
     }
 
+    private function syncTags(Request $request, Status $status)
+    {
+        $tagsId = collect($request->input('tags'))->map(function($tag) {
+            return Tag::firstOrCreate(['name' => $tag])->id;
+        });
+
+        $status->tags()->sync($tagsId);
+    }
+
     protected function validateRequest()
     {
         return request()->validate([
-            'body' => 'sometimes|required'
+            'body' => 'sometimes|required',
+            'tags' => 'sometimes|required'
         ]);
     }
 }
