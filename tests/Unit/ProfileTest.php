@@ -17,7 +17,7 @@ class ProfileTest extends TestCase
         $this->assertEquals("/profile/{$profile->username}", $profile->path());
     }
 
-    public function test_a_profile_has_a_user()
+    public function test_a_profile_belongs_to_a_user()
     {
         $profile = factory('App\Profile')->create();
 
