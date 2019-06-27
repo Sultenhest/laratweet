@@ -28,7 +28,7 @@ class StatusController extends Controller
 
         $this->syncTags($request, $status);
 
-        event(new StatusCreated(auth()->user()));
+        StatusCreated::dispatch(auth()->user());
 
         return redirect($status->path());
     }
@@ -60,7 +60,7 @@ class StatusController extends Controller
 
         $status->delete();
 
-        event(new StatusDeleted(auth()->user()));
+        StatusDeleted::dispatch(auth()->user());
 
         return redirect("/");
     }
@@ -90,7 +90,7 @@ class StatusController extends Controller
 
         $status->replies()->save($reply);
 
-        event(new StatusCreated(auth()->user()));
+        StatusDeleted::dispatch(auth()->user());
 
         return redirect($status->path());
     }
