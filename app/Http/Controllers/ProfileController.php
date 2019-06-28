@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\Achievement;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
     public function show(Profile $profile)
     {
-        return view('profiles.show', compact('profile'));
+        $achievements = Achievement::all();
+        $awarded_achievements = $profile->user->achievements;
+
+        return view('profiles.show', compact('profile', 'achievements', 'awarded_achievements'));
     }
 
     public function edit(Profile $profile)
