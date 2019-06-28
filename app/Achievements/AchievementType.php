@@ -14,7 +14,7 @@ abstract class AchievementType
         $this->model = Achievement::firstOrCreate([
             'name' => $this->name(),
             'description' => $this->description,
-            'icon' => $this->icon
+            'icon' => $this->icon()
         ]);
     }
 
@@ -26,6 +26,16 @@ abstract class AchievementType
         }
 
         return Str::title(Str::snake(class_basename($this), ' '));
+    }
+
+    public function icon()
+    {
+        if (property_exists($this, 'icon'))
+        {
+            return $this->icon;
+        }
+
+        return Str::snake(class_basename($this), '-') . '.svg';
     }
 
     abstract public function qualifier($user);
