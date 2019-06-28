@@ -13,7 +13,7 @@ abstract class AchievementType
     {
         $this->model = Achievement::firstOrCreate([
             'name' => $this->name(),
-            'description' => $this->description,
+            'description' => $this->description(),
             'icon' => $this->icon()
         ]);
     }
@@ -27,6 +27,8 @@ abstract class AchievementType
 
         return Str::title(Str::snake(class_basename($this), ' '));
     }
+
+    abstract public function description();
 
     public function icon()
     {

@@ -4,7 +4,10 @@ namespace App\Achievements;
 
 class {{ CLASS }} extends AchievementType
 {
-    public $description = '';
+    public function description()
+    {
+        //
+    }
 
     public function qualifier($user)
     {

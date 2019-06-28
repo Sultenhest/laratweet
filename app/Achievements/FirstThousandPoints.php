@@ -4,7 +4,10 @@ namespace App\Achievements;
 
 class FirstThousandPoints extends AchievementType
 {
-    public $description = 'Great job! You are on your way.';
+    public function description()
+    {
+        return 'Great job! You are on your way.';
+    }
 
     public function qualifier($user)
     {

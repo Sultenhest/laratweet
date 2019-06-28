@@ -12,14 +12,14 @@ class AchievementTypeTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    public function test_it_set_a_default_name()
+    public function test_it_sets_a_default_name()
     {
         $type = new FakeAchievementType();
 
         $this->assertEquals('Fake Achievement Type', $type->name());
     }
 
-    public function test_it_set_a_default_icon_name()
+    public function test_it_sets_a_default_icon_name()
     {
         $type = new FakeAchievementType();
 
@@ -29,7 +29,10 @@ class AchievementTypeTest extends TestCase
 
 class FakeAchievementType extends AchievementType
 {
-    public $description = 'fake description';
+    public function description()
+    {
+        return 'Some description';
+    }
 
     public function qualifier($user)
     {
