@@ -3,12 +3,25 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\Events\UserEarnedExperience;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExperienceTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_an_announcement_is_made_when_experience_is_earned()
+    {
+        Event::fake();
+
+        $this->signIn()->experience->awardExperience(100);
+
+        Event::assertDispatched(UserEarnedExperience::class, function ($event) {
+            return auth()->user()->is($event->user) && $event->points == 100 && $event->totalPoints == 100;
+        });
+    }
 
     public function test_experience_belongs_to_a_user()
     {

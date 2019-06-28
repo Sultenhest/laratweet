@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\UserEarnedExperience;
 use Illuminate\Database\Eloquent\Model;
 
 class Experience extends Model
@@ -18,6 +19,8 @@ class Experience extends Model
     public function awardExperience($points)
     {
         $this->increment('points', $points);
+
+        UserEarnedExperience::dispatch($this->user, $points, $this->points);
 
         return $this;
     }
