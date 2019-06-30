@@ -78,7 +78,7 @@ class StatusController extends Controller
 
     public function like(Status $status)
     {
-        auth()->user()->likes()->toggle($status);
+        $status->like();
 
         return redirect($status->path());
     }

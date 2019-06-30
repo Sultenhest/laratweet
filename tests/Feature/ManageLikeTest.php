@@ -18,10 +18,8 @@ class ManageLikeTest extends TestCase
         
         $this->assertFalse($status->isLiked());
 
-        $response = $this->post($status->path() . '/like');
-
-        $response->assertRedirect($status->path());
-
+        $status->like();
+        
         $this->assertEquals(1, $status->likes()->count());
 
         $this->assertDatabaseHas('likes', [
@@ -31,9 +29,7 @@ class ManageLikeTest extends TestCase
 
         $this->assertTrue($status->isLiked());
 
-        $response = $this->post($status->path() . '/like');
-
-        $response->assertRedirect($status->path());
+        $status->like();
 
         $this->assertEquals(0, $status->likes()->count());
 

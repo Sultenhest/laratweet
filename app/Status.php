@@ -25,6 +25,11 @@ class Status extends Model
         return $this->belongsToMany(User::class, 'likes');
     }
 
+    public function like()
+    {
+        return $this->likes()->toggle(auth()->id());
+    }
+
     public function isLiked()
     {
         return auth()->user()->likes()->where('id', $this->id)->exists();
