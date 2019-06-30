@@ -14,7 +14,8 @@ abstract class AchievementType
         $this->model = Achievement::firstOrCreate([
             'name' => $this->name(),
             'description' => $this->description(),
-            'icon' => $this->icon()
+            'icon' => $this->icon(),
+            'level' => $this->level()
         ]);
     }
 
@@ -38,6 +39,11 @@ abstract class AchievementType
         }
 
         return Str::snake(class_basename($this), '-') . '.svg';
+    }
+
+    public function level()
+    {
+        return 'intermediate';
     }
 
     abstract public function qualifier($user);
