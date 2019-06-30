@@ -53,4 +53,33 @@ class AchievementTest extends TestCase
 
         $this->assertCount(1, Achievement::all()->for($user));
     }
+
+    public function test_it_can_sort_achievements_according_to_a_skill_level ()
+    {
+        factory('App\Achievement')->create(['level' => 'advanced']);
+        factory('App\Achievement')->create(['level' => 'beginner']);
+        factory('App\Achievement')->create(['level' => 'intermediate']);
+
+        $achievements = Achievement::all();
+
+        $this->assertEquals(['beginner', 'intermediate', 'advanced'], Achievement::all()->sortByLevel()->pluck('level')->all());
+        $this->assertEquals(['advanced', 'intermediate', 'beginner'], Achievement::all()->sortByLevelDesc()->pluck('level')->all());
+    }
+
+    public function test_it_can_return_percentage_of_completed_achievements()
+    {
+        $user = $this->signIn();
+        $achievements = factory('App\Achievement', 10)->create();
+
+        $this->assertEquals(0.0, Achievement::all()->for($user)->asPercentageOfTotalAvailable());
+
+        $user = $user->fresh();
+
+        $achievements[0]->awardTo($user);
+        $achievements[1]->awardTo($user);
+        $achievements[2]->awardTo($user);
+        $achievements[3]->awardTo($user);
+
+        $this->assertEquals(40.0, Achievement::all()->for($user)->asPercentageOfTotalAvailable());
+    }
 }
