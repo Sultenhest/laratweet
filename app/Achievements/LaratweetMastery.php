@@ -11,6 +11,6 @@ class LaratweetMastery extends AchievementType
 
     public function qualifier($user)
     {
-        return $user->experience->points >= 10000;
+        return $user->experience->points >= 100000;
     }
 }

@@ -41,7 +41,7 @@ class ManageAchievementsTest extends TestCase
 
         $user = $user->fresh();
         
-        $user->experience->awardExperience(9000);
+        $user->experience->awardExperience(99000);
 
         $this->assertCount(2, $user->achievements);
     }
