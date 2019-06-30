@@ -12,6 +12,11 @@ abstract class TestCase extends BaseTestCase
     protected function signIn($user = null)
     {
         $user = $user ?: factory('App\User')->create();
+        
+        $user->profile()->create([
+            'name' => $user->name,
+            'username' => 'sultenhest'
+        ]);
 
         $user->experience()->create([]);
 

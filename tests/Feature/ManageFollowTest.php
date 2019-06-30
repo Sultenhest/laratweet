@@ -19,26 +19,40 @@ class ManageFollowTest extends TestCase
 
     public function test_a_user_can_follow_and_unfollow_another_user()
     {
-        $follower = factory('App\Profile')->create();
-
-        $followed = factory('App\Profile')->create();
-
-        $response = $this->actingAs($follower->user)
-                        ->post($followed->path() . '/follow');
-
-        $this->assertDatabaseHas('follows', [
-            'follower_user_id' => $follower->user->id,
-            'followed_user_id' => $followed->user->id
+        $jack = $this->signIn();
+        $jane = factory('App\User')->create([
+            'name' => 'jane'
         ]);
 
-        $response->assertRedirect($followed->path());
+        $jane->profile()->create([
+            'name' => $this->faker->name,
+            'username' => $this->faker->userName
+        ]);
 
-        $this->actingAs($follower->user)
-            ->post($followed->path() . '/follow');
+        $response = $this->actingAs($jack)
+            ->post($jane->profile->path() . '/follow');
+
+        $this->assertDatabaseHas('follows', [
+            'follower_user_id' => $jack->id,
+            'followed_user_id' => $jane->id
+        ]);
+
+        $response->assertRedirect($jane->profile->path());
+
+        $this->actingAs($jane)
+            ->post($jack->profile->path() . '/follow');
+
+        $this->actingAs($jack)
+            ->post($jane->profile->path() . '/follow');
 
         $this->assertDatabaseMissing('follows', [
-            'follower_user_id' => $follower->user->id,
-            'followed_user_id' => $followed->user->id
+            'follower_user_id' => $jack->id,
+            'followed_user_id' => $jane->id
+        ]);
+
+        $this->assertDatabaseHas('follows', [
+            'follower_user_id' => $jane->id,
+            'followed_user_id' => $jack->id
         ]);
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Achievements\FirstThousandPoints;
 use App\Achievements\LaratweetMastery;
 use App\Achievements\FirstTenLikes;
-use App\Achievements\PopularMessage;
+use App\Achievements\SmallFollowing;
 
 use App\Events\UserEarnedExperience;
 use App\Listeners\AwardAchievements;
@@ -18,7 +18,7 @@ class AchievementsServiceProvider extends ServiceProvider
         FirstThousandPoints::class,
         LaratweetMastery::class,
         FirstTenLikes::class,
-        PopularMessage::class
+        SmallFollowing::class
     ];
 
     public function boot()

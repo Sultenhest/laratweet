@@ -62,4 +62,38 @@ class ManageAchievementsTest extends TestCase
 
         $this->assertCount(1, $user->achievements);
     }
+
+    public function test_an_achievement_badge_is_unlocked_once_a_user_gets_10_followers()
+    {
+        $user = $this->signIn();
+
+        $this->assertCount(0, $user->followers);
+
+        $followers = factory('App\User', 10)->create();
+
+        foreach ($followers as $follower) {
+            $user->addFollower($follower);
+        }
+
+        $user = $user->fresh();
+
+        $this->assertCount(10, $user->followers);
+
+        $this->assertCount(1, $user->achievements);
+    }
+
+    public function an_achievement_badge_is_unlocked_once_a_user_gets_10_likes_on_a_status()
+    {
+        $status = factory('App\Status')->create();
+        $status->user->experience()->create([]);
+        
+        for ($x = 0; $x <= 9; $x++) {
+            $this->signIn();
+            $status->like();
+        }
+
+        $this->assertCount(10, $status->likes);
+
+        $this->assertCount(0, $status->user->achievements);
+    }
 }

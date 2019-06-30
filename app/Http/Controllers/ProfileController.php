@@ -33,11 +33,9 @@ class ProfileController extends Controller
     public function follow(Profile $profile)
     {
         $this->authorize('canFollow', $profile);
-
-        $user = $profile->user;
-
-        auth()->user()->following()->toggle($user);
-
+        
+        $profile->user->addFollower(auth()->user());
+       
         return redirect($profile->path());
     }
 

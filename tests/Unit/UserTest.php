@@ -25,4 +25,17 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->statuses);
     }
+
+    public function test_a_user_can_follow_and_get_followed()
+    {
+        $jack = $this->signIn();
+        $jane = factory('App\User')->create([
+            'name' => 'jane'
+        ]);
+
+        $jane->addFollower($jack);
+
+        $this->assertCount(1, $jack->following);
+        $this->assertCount(1, $jane->followers);
+    }
 }

@@ -52,6 +52,15 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'follower_user_id');
     }
 
+    public function addFollower($user)
+    {
+        $follow = $this->followers()->toggle($user);
+        
+        auth()->user()->experience->awardExperience(100);
+
+        return $follow;
+    }
+
     public function achievements()
     {
         return $this->belongsToMany(Achievement::class, 'user_achievements')->withTimestamps();
