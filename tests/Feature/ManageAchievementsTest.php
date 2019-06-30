@@ -45,4 +45,21 @@ class ManageAchievementsTest extends TestCase
 
         $this->assertCount(2, $user->achievements);
     }
+
+    public function test_an_achievement_badge_is_unlocked_once_a_user_likes_10_statuses()
+    {
+        $user = $this->signIn();
+
+        $statuses = factory('App\Status', 10)->create();
+
+        foreach ($statuses as $status) {
+            $status->like();
+        }
+
+        $user = $user->fresh();
+
+        $this->assertCount(10, $user->likes);
+
+        $this->assertCount(1, $user->achievements);
+    }
 }

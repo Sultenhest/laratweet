@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\User;
+use App\Events\UserLikedAStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
@@ -27,7 +29,12 @@ class Status extends Model
 
     public function like()
     {
-        return $this->likes()->toggle(auth()->id());
+        $like = $this->likes()->toggle(auth()->id());
+        $user = auth()->user();
+        
+        $user->experience->awardExperience(100);
+
+        return $like;
     }
 
     public function isLiked()

@@ -3,19 +3,27 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+
 use App\Achievements\FirstThousandPoints;
 use App\Achievements\LaratweetMastery;
+use App\Achievements\FirstTenLikes;
+use App\Achievements\PopularMessage;
+
+use App\Events\UserEarnedExperience;
+use App\Listeners\AwardAchievements;
 
 class AchievementsServiceProvider extends ServiceProvider
 {
     protected $achievements = [
         FirstThousandPoints::class,
-        LaratweetMastery::class
+        LaratweetMastery::class,
+        FirstTenLikes::class,
+        PopularMessage::class
     ];
 
     public function boot()
     {
-        \Event::listen(\Event\UserEarnedExperience::class, \Listeners\AwardAchievements::class);
+        \Event::listen(UserEarnedExperience::class, AwardAchievements::class);
     }
 
     public function register()
