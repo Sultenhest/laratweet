@@ -15,6 +15,8 @@ class ManageLikeTest extends TestCase
         $user = $this->signIn();
 
         $status = factory('App\Status')->create();
+        
+        $this->assertFalse($status->isLiked());
 
         $response = $this->post($status->path() . '/like');
 
@@ -40,7 +42,7 @@ class ManageLikeTest extends TestCase
             'status_id' => $status->id
         ]);
 
-        $this->assertTrue($status->isLiked());
+        $this->assertFalse($status->isLiked());
     }
 
     public function test_a_guest_cannot_like_a_status()
