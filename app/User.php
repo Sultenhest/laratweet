@@ -38,6 +38,11 @@ class User extends Authenticatable
         return $this->hasOne(Experience::class);
     }
 
+    public function getExperience()
+    {
+        return $this->experience ? $this->experience->points : 0;
+    }
+
     public function statuses()
     {
         return $this->hasMany(Status::class)->latest('updated_at');
@@ -50,12 +55,12 @@ class User extends Authenticatable
 
     public function following()
     {
-        return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'followed_user_id');
+        return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'followed_user_id')->withTimestamps();
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'follower_user_id');
+        return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'follower_user_id')->withTimestamps();
     }
 
     public function isFollowed()

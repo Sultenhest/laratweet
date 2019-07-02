@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
                 $status->tags()->sync($random);
             });
 
+            //Follow
             for ($i = 0; $i <= rand(25, 75); $i++) {
                 $id = rand(0,149);
 

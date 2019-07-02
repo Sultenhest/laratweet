@@ -21,7 +21,7 @@
                     @endcan
                 </div>
 
-                <p><strong>Experience Points:</strong> {{ $user->experience->points }}</p>
+                <p><strong>Experience Points:</strong> {{ $user->getExperience() }}</p>
 
                 <div>
                     <h4>Achievements</h4>
@@ -40,7 +40,7 @@
                 </div>
 
                 <div>
-                    <h4>Total followers: {{ count($following) }}</h4>
+                    <h4>Total following: {{ count($following) }}</h4>
                     @foreach ($user->following as $following)
                         <a href="{{ $following->path() }}">
                             {{ $following->username }}

@@ -40,7 +40,7 @@ class ManageUserTest extends TestCase
 
         $user = factory('App\User')->create();
 
-        //$this->get($user->path())->assertOk();
+        $this->get($user->path())->assertOk();
     }
 
     public function test_an_authenticated_user_cannot_update_other_users_info()

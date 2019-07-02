@@ -11,12 +11,12 @@
 
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">Visit some profiles</div>
+                    <div class="card-header">Visit some users</div>
 
                     <div class="card-body">
-                        @foreach($profiles as $profile)
-                            <a href="{{ $profile->path() }}">
-                                {{ $profile->username }}
+                        @foreach($users as $user)
+                            <a href="{{ $user->path() }}">
+                                {{ $user->username }}
                             </a>
                         @endforeach
                     </div>

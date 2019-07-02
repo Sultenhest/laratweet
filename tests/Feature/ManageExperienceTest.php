@@ -39,4 +39,23 @@ class ManageExperienceTest extends TestCase
 
         $this->assertEquals(0, $user->experience->points);
     }
+
+    public function test_a_user_can_see_their_experience()
+    {
+        $user = $this->signIn();
+
+        $this->post('/status', [
+            'body' => $this->faker->sentence
+        ]);
+
+        $this->get($user->path())
+            ->assertSee(100);
+
+        $this->post('/status', [
+            'body' => $this->faker->sentence
+        ]);
+
+        $this->get($user->path())
+            ->assertSee(200);
+    }
 }
