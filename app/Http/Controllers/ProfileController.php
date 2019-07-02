@@ -10,10 +10,15 @@ class ProfileController extends Controller
 {
     public function show(Profile $profile)
     {
+        $statuses = $profile->user->statuses;
+
+        $followers = $profile->user->followers;
+        $following = $profile->user->following;
+
         $achievements = Achievement::all();
         $awarded_achievements = $profile->user->achievements;
 
-        return view('profiles.show', compact('profile', 'achievements', 'awarded_achievements'));
+        return view('profiles.show', compact('profile', 'statuses', 'followers', 'following', 'achievements', 'awarded_achievements'));
     }
 
     public function edit(Profile $profile)

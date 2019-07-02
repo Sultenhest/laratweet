@@ -9,13 +9,15 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::withCount('statuses')
+            ->orderBy('statuses_count', 'desc')
+            ->get();
         return view('tags.index', compact('tags'));
     }
 
     public function show(Tag $tag)
     {
-        $statuses = $tag->statuses()->latest()->paginate(2);
+        $statuses = $tag->statuses()->latest()->paginate(20);
         return view('tags.show', compact('tag', 'statuses'));
     }
 }
