@@ -13,10 +13,12 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $user ?: factory('App\User')->create();
         
+        /*
         $user->profile()->create([
             'name' => $user->name,
             'username' => 'sultenhest'
         ]);
+        */
 
         $user->experience()->create([]);
 

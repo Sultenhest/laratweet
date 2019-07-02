@@ -12,6 +12,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name', 'email', 'password',
+        'username', 'bio'
     ];
 
     protected $hidden = [
@@ -22,9 +23,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile()
+    public function getRouteKeyName()
     {
-        return $this->hasOne(Profile::class);
+        return 'username';
+    }
+
+    public function path()
+    {
+        return "/user/{$this->username}";
     }
 
     public function experience()

@@ -2,11 +2,11 @@
     <div class="card-body">
         <h5 class="card-title">
             <strong>
-                {{ $status->user->profile->name }}
+                {{ $status->user->name }}
             </strong>
 
-            <a href="{{ $status->user->profile->path() }}">
-                {{ $status->user->profile->username }}
+            <a href="{{ $status->user->path() }}">
+                {{ $status->user->username }}
             </a>
             -
             <small>

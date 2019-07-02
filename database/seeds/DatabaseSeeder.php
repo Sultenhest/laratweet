@@ -3,7 +3,6 @@
 use App\Tag;
 use App\User;
 use App\Status;
-use App\Profile;
 
 use Faker\Factory as Faker;
 
@@ -27,11 +26,6 @@ class DatabaseSeeder extends Seeder
         foreach($users as $user) {
             $user->experience()->create([
                 'points' => 0
-            ]);
-
-            $user->profile()->create([
-                'name' => $user->name,
-                'username' => $faker->userName
             ]);
 
             $random = rand(25, 50);
