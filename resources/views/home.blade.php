@@ -4,9 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @foreach($statuses as $status)
-                    {{ $status }}
-                @endforeach
+                Activity Feed Here
             </div>
 
             <div class="col-md-4">

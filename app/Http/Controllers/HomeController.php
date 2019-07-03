@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $statuses = auth()->user()->following()->with('statuses')->orderBy('created_at', 'desc')->paginate(15);
-        
+        $statuses = DB::table('follows')
+            ->join('statuses', 'follows.followed_user_id', '=', 'statuses.user_id')
+            ->join('users', 'statuses.user_id', '=', 'users.id')
+            ->select('statuses.*', 'users.username', 'users.name')
+            ->where('follows.follower_user_id', '=', auth()->id())
+            ->latest()
+            ->limit(15)
+            ->get()
+            ->toArray();
+
         $users = User::take(15)->get();
 
         return view('home', compact('statuses', 'users'));
