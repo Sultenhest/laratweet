@@ -18,7 +18,7 @@ class ManageLikeTest extends TestCase
         
         $this->assertFalse($status->isLiked());
 
-        $status->like();
+        $status->toggleLike();
         
         $this->assertEquals(1, $status->likes()->count());
 
@@ -29,7 +29,7 @@ class ManageLikeTest extends TestCase
 
         $this->assertTrue($status->isLiked());
 
-        $status->like();
+        $status->toggleLike();
 
         $this->assertEquals(0, $status->likes()->count());
 

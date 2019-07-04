@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Status;
-use App\Activity;
 
 class StatusObserver
 {
@@ -15,7 +14,7 @@ class StatusObserver
      */
     public function created(Status $status)
     {
-        $this->recordActivity($status, 'created');
+        $status->recordActivity('created');
     }
 
     /**
@@ -26,14 +25,6 @@ class StatusObserver
      */
     public function updated(Status $status)
     {
-        $this->recordActivity($status, 'updated');
-    }
-
-    protected function recordActivity($status, $type)
-    {
-        Activity::create([
-            'status_id' => $status->id,
-            'description' => $type
-        ]);
+        $status->recordActivity('updated');
     }
 }

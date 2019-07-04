@@ -25,4 +25,26 @@ class StatusTest extends TestCase
 
         $this->assertInstanceOf('App\User', $status->user);
     }
+
+    /** @test */
+    public function it_can_be_pinned()
+    {
+        $status = factory('App\Status')->create();
+
+        $this->assertFalse($status->pinned);
+
+        $status->togglePin();
+
+        $this->assertTrue($status->fresh()->pinned);
+    }
+
+    /** @test */
+    public function it_can_be_unpinned()
+    {
+        $status = factory('App\Status')->create(['pinned' => true]);
+
+        $status->togglePin();
+
+        $this->assertFalse($status->fresh()->pinned);
+    }
 }

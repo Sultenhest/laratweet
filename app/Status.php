@@ -12,6 +12,10 @@ class Status extends Model
         'body', 'pinned'
     ];
 
+    protected $casts = [
+        'pinned' => 'boolean'
+    ];
+
     public function path()
     {
         return "/status/{$this->id}";
@@ -22,16 +26,29 @@ class Status extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function togglePin()
+    {
+        $this->update([
+            'pinned' => ! $this->pinned
+        ]);
+
+        if ($this->pinned) {
+            $this->recordActivity('pinned');
+        }
+    }
+
     public function likes()
     {
         return $this->belongsToMany(User::class, 'likes');
     }
 
-    public function like()
+    public function toggleLike()
     {
         $like = $this->likes()->toggle(auth()->id());
         
         auth()->user()->awardExperience(100);
+
+        $this->recordActivity('added_like');
 
         return $like;
     }
@@ -59,5 +76,10 @@ class Status extends Model
     public function activity()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function recordActivity($description)
+    {
+        $this->activity()->create(compact('description'));
     }
 }

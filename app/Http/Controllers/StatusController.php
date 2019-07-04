@@ -69,16 +69,14 @@ class StatusController extends Controller
     {
         $this->authorize('update', $status);
 
-        $status->update([
-            'pinned' => !$status->pinned
-        ]);
+        $status->togglePin();
 
         return redirect($status->path());
     }
 
     public function like(Status $status)
     {
-        $status->like();
+        $status->toggleLike();
 
         return redirect($status->path());
     }

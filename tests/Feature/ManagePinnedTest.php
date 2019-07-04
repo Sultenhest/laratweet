@@ -31,7 +31,7 @@ class ManagePinnedTest extends TestCase
             ->patch($status->path() . '/pin')
             ->assertRedirect($status->path());
 
-        $this->assertTrue($status->pinned = true);
+        $this->assertTrue($status->fresh()->pinned);
 
         $this->actingAs($status->user)
             ->get($status->path())

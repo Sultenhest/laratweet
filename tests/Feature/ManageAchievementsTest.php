@@ -53,7 +53,7 @@ class ManageAchievementsTest extends TestCase
         $statuses = factory('App\Status', 10)->create();
 
         foreach ($statuses as $status) {
-            $status->like();
+            $status->toggleLike();
         }
 
         $this->assertCount(10, $user->likes);
