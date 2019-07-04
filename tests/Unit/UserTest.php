@@ -2,8 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Experience;
-
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,13 +16,6 @@ class UserTest extends TestCase
         $user = factory('App\User')->create();
 
         $this->assertEquals("/user/{$user->username}", $user->path());
-    }
-
-    public function test_a_user_has_experience()
-    {
-        $user = $this->signIn();
-
-        $this->assertInstanceOf(Experience::class, $user->experience);
     }
 
     public function test_a_profile_has_a_username()

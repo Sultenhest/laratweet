@@ -21,7 +21,7 @@
                     @endcan
                 </div>
 
-                <p><strong>Experience Points:</strong> {{ $user->getExperience() }}</p>
+                <p><strong>Experience Points:</strong> {{ $user->points }}</p>
 
                 <div>
                     <h4>Achievements</h4>

@@ -28,7 +28,7 @@ class StatusController extends Controller
 
         $this->syncTags($request, $status);
 
-        auth()->user()->experience->awardExperience(100);
+        auth()->user()->awardExperience(100);
 
         return redirect($status->path());
     }
@@ -60,7 +60,7 @@ class StatusController extends Controller
 
         $status->delete();
 
-        auth()->user()->experience->stripExperience(100);
+        auth()->user()->stripExperience(100);
 
         return redirect("/");
     }
@@ -90,7 +90,7 @@ class StatusController extends Controller
 
         $status->replies()->save($reply);
         
-        auth()->user()->experience->awardExperience(100);
+        auth()->user()->awardExperience(100);
 
         return redirect($status->path());
     }

@@ -11,6 +11,6 @@ class FirstThousandPoints extends AchievementType
 
     public function qualifier($user)
     {
-        return $user->experience->points >= 1000;
+        return $user->points >= 1000;
     }
 }

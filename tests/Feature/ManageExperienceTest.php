@@ -14,13 +14,13 @@ class ManageExperienceTest extends TestCase
     {
         $user = $this->signIn();
 
-        $this->assertEquals(0, $user->experience->points);
+        $this->assertEquals(0, $user->points);
 
         $this->post('/status', [
             'body' => $this->faker->sentence
         ]);
         
-        $this->assertEquals(100, $user->experience->points);
+        $this->assertEquals(100, $user->points);
     }
 
     public function test_a_user_lose_experience_on_status_deletion()
@@ -31,13 +31,13 @@ class ManageExperienceTest extends TestCase
             'body' => $this->faker->sentence
         ]);
 
-        $this->assertEquals(100, $user->experience->points);
+        $this->assertEquals(100, $user->points);
 
         $this->actingAs($user)
             ->delete('/status/1')
             ->assertRedirect('/');
 
-        $this->assertEquals(0, $user->experience->points);
+        $this->assertEquals(0, $user->points);
     }
 
     public function test_a_user_can_see_their_experience()

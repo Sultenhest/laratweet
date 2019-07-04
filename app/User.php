@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\UserEarnedExperience;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +14,8 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name', 'email', 'password',
-        'username', 'bio'
+        'username', 'bio',
+        'points'
     ];
 
     protected $hidden = [
@@ -32,15 +35,21 @@ class User extends Authenticatable
     {
         return "/user/{$this->username}";
     }
-
-    public function experience()
+   
+    public function awardExperience($points)
     {
-        return $this->hasOne(Experience::class);
+        $this->increment('points', $points);
+
+        UserEarnedExperience::dispatch($this, $points, $this->points);
+
+        return $this;
     }
 
-    public function getExperience()
+    public function stripExperience($points)
     {
-        return $this->experience ? $this->experience->points : 0;
+        $this->decrement('points', $points);
+
+        return $this;
     }
 
     public function statuses()
@@ -72,7 +81,7 @@ class User extends Authenticatable
     {
         $follow = $this->followers()->toggle($user);
         
-        auth()->user()->experience->awardExperience(100);
+        $this->awardExperience(100);
 
         return $follow;
     }

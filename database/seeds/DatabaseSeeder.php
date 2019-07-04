@@ -24,10 +24,6 @@ class DatabaseSeeder extends Seeder
         $users = factory(App\User::class, 150)->create();
 
         foreach($users as $user) {
-            $user->experience()->create([
-                'points' => 0
-            ]);
-
             $random = rand(25, 50);
 
             factory(App\Status::class, $random)->create(['user_id' => $user->id])->each(function ($status, $tags) {

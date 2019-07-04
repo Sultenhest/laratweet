@@ -26,7 +26,7 @@ class ManageAchievementsTest extends TestCase
     {
         $user = $this->signIn();
         
-        $user->experience->awardExperience(1000);
+        $user->awardExperience(1000);
 
         $this->assertCount(1, $user->achievements);
     }
@@ -35,13 +35,13 @@ class ManageAchievementsTest extends TestCase
     {
         $user = $this->signIn();
         
-        $user->experience->awardExperience(1000);
+        $user->awardExperience(1000);
 
         $this->assertCount(1, $user->achievements);
 
         $user = $user->fresh();
         
-        $user->experience->awardExperience(99000);
+        $user->awardExperience(99000);
 
         $this->assertCount(2, $user->achievements);
     }
@@ -56,11 +56,9 @@ class ManageAchievementsTest extends TestCase
             $status->like();
         }
 
-        $user = $user->fresh();
-
         $this->assertCount(10, $user->likes);
 
-        $this->assertCount(1, $user->achievements);
+        $this->assertCount(2, $user->achievements);
     }
 
     public function test_an_achievement_badge_is_unlocked_once_a_user_gets_10_followers()
@@ -79,13 +77,12 @@ class ManageAchievementsTest extends TestCase
 
         $this->assertCount(10, $user->followers);
 
-        $this->assertCount(1, $user->achievements);
+        $this->assertCount(2, $user->achievements);
     }
 
     public function an_achievement_badge_is_unlocked_once_a_user_gets_10_likes_on_a_status()
     {
         $status = factory('App\Status')->create();
-        $status->user->experience()->create([]);
         
         for ($x = 0; $x <= 9; $x++) {
             $this->signIn();

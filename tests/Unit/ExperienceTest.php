@@ -16,24 +16,17 @@ class ExperienceTest extends TestCase
     {
         Event::fake();
 
-        $this->signIn()->experience->awardExperience(100);
+        $this->signIn()->awardExperience(100);
 
         Event::assertDispatched(UserEarnedExperience::class, function ($event) {
             return auth()->user()->is($event->user) && $event->points == 100 && $event->totalPoints == 100;
         });
     }
 
-    public function test_experience_belongs_to_a_user()
-    {
-        $user = $this->signIn();
-
-        $this->assertInstanceOf('App\Experience', $user->experience);
-    }
-
     public function test_a_user_has_zero_experience_points_on_registration()
     {
         $user = $this->signIn();
 
-        $this->assertEquals(0, $user->experience->points);
+        $this->assertEquals(0, $user->points);
     }
 }

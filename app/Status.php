@@ -31,7 +31,7 @@ class Status extends Model
     {
         $like = $this->likes()->toggle(auth()->id());
         
-        auth()->user()->experience->awardExperience(100);
+        auth()->user()->awardExperience(100);
 
         return $like;
     }

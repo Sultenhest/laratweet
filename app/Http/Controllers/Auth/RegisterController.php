@@ -71,8 +71,6 @@ class RegisterController extends Controller
             'username' => $data['username']
         ]);
 
-        $user->experience()->create([]);
-
         return $user;
     }
 }
