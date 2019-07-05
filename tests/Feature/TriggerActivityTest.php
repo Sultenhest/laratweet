@@ -14,24 +14,16 @@ class TriggerActivityTest extends TestCase
 
     public function test_creating_a_status()
     {
+        $this->signIn();
+
         $status = factory(Status::class)->create();
 
         $this->assertCount(1, $status->activity);
 
-        $this->assertEquals('created', $status->activity[0]->description);
+        $this->assertEquals('created_status', $status->activity[0]->type);
     }
 
-    public function test_updating_a_status()
-    {
-        $status = factory(Status::class)->create();
-
-        $status->update(['body' => 'changed']);
-
-        $this->assertCount(2, $status->activity);
-        $this->assertEquals('updated', $status->activity->last()->description);
-    }
-
-    public function test_liking_a_status()
+    public function liking_a_status()
     {
         $this->signIn();
 
@@ -40,21 +32,23 @@ class TriggerActivityTest extends TestCase
         $status->toggleLike();
 
         $this->assertCount(2, $status->activity);
-        $this->assertEquals('added_like', $status->activity->last()->description);
+        $this->assertEquals('liked', $status->activity->last()->type);
     }
 
-    public function test_pining_a_status()
+    public function pinning_a_status()
     {
+        $this->signIn();
+
         $status = factory(Status::class)->create();
 
         $this->actingAs($status->user)
             ->patch($status->path() . '/pin');
 
         $this->assertCount(3, $status->activity);
-        $this->assertEquals('pinned', $status->activity->last()->description);
+        $this->assertEquals('pinned', $status->activity->last()->type);
     }
 /*
-    public function test_gaining_achievement()
+    public function gaining_achievement()
     {
         $user = $this->signIn();
 

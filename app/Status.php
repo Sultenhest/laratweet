@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+    use RecordsActivity;
+
     protected $fillable = [
         'body', 'pinned'
     ];
@@ -33,7 +35,7 @@ class Status extends Model
         ]);
 
         if ($this->pinned) {
-            $this->recordActivity('pinned');
+            //$this->recordActivity('pinned');
         }
     }
 
@@ -48,7 +50,7 @@ class Status extends Model
         
         auth()->user()->awardExperience(100);
 
-        $this->recordActivity('added_like');
+        //$this->recordActivity('liked');
 
         return $like;
     }
@@ -72,14 +74,22 @@ class Status extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
-
+/*
     public function activity()
     {
         return $this->hasMany(Activity::class);
     }
-
-    public function recordActivity($description)
+*/
+    /*
+    public function recordActivity($type)
     {
-        $this->activity()->create(compact('description'));
+        //$this->activity()->create(compact('description'));
+        Activity::create([
+            'user_id' => auth()->id(),
+            'subject_id' => $this->id,
+            'subject_type' => get_class($this),
+            'type' => $type . '_' . strtolower((new \ReflectionClass($this))->getShortName())
+        ]);
     }
+    */
 }
