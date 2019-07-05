@@ -74,13 +74,6 @@ class StatusController extends Controller
         return redirect($status->path());
     }
 
-    public function like(Status $status)
-    {
-        $status->toggleLike();
-
-        return redirect($status->path());
-    }
-
     public function reply(Status $status)
     {
         $reply = new Status($this->validateRequest());

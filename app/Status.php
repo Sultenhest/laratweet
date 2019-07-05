@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
-    use RecordsActivity;
+    use Likeable, RecordsActivity;
 
     protected $fillable = [
         'body', 'pinned'
@@ -39,27 +39,6 @@ class Status extends Model
         }
     }
 
-    public function likes()
-    {
-        return $this->belongsToMany(User::class, 'likes');
-    }
-
-    public function toggleLike()
-    {
-        $like = $this->likes()->toggle(auth()->id());
-        
-        auth()->user()->awardExperience(100);
-
-        //$this->recordActivity('liked');
-
-        return $like;
-    }
-
-    public function isLiked()
-    {
-        return auth()->user()->likes()->where('id', $this->id)->exists();
-    }
-
     public function parent()
     {
         return $this->belongsTo(Status::class);
@@ -74,22 +53,4 @@ class Status extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
-/*
-    public function activity()
-    {
-        return $this->hasMany(Activity::class);
-    }
-*/
-    /*
-    public function recordActivity($type)
-    {
-        //$this->activity()->create(compact('description'));
-        Activity::create([
-            'user_id' => auth()->id(),
-            'subject_id' => $this->id,
-            'subject_type' => get_class($this),
-            'type' => $type . '_' . strtolower((new \ReflectionClass($this))->getShortName())
-        ]);
-    }
-    */
 }

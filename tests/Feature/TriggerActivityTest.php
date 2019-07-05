@@ -29,7 +29,7 @@ class TriggerActivityTest extends TestCase
 
         $status = factory(Status::class)->create();
 
-        $status->toggleLike();
+        $status->like();
 
         $this->assertCount(2, $status->activity);
         $this->assertEquals('liked', $status->activity->last()->type);
