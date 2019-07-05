@@ -8,11 +8,11 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ActivityFeedTest extends TestCase
+class TriggerActivityTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    public function test_creating_a_status_records_activity()
+    public function test_creating_a_status()
     {
         $status = factory(Status::class)->create();
 
@@ -21,7 +21,7 @@ class ActivityFeedTest extends TestCase
         $this->assertEquals('created', $status->activity[0]->description);
     }
 
-    public function test_updating_a_status_records_activity()
+    public function test_updating_a_status()
     {
         $status = factory(Status::class)->create();
 
@@ -31,7 +31,7 @@ class ActivityFeedTest extends TestCase
         $this->assertEquals('updated', $status->activity->last()->description);
     }
 
-    public function test_liking_a_status_records_activity()
+    public function test_liking_a_status()
     {
         $this->signIn();
 
@@ -43,7 +43,7 @@ class ActivityFeedTest extends TestCase
         $this->assertEquals('added_like', $status->activity->last()->description);
     }
 
-    public function test_pining_a_status_records_activity()
+    public function test_pining_a_status()
     {
         $status = factory(Status::class)->create();
 
@@ -54,7 +54,7 @@ class ActivityFeedTest extends TestCase
         $this->assertEquals('pinned', $status->activity->last()->description);
     }
 /*
-    public function test_gaining_achievement_records_activity()
+    public function test_gaining_achievement()
     {
         $user = $this->signIn();
 
