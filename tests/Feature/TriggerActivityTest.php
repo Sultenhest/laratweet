@@ -23,16 +23,16 @@ class TriggerActivityTest extends TestCase
         $this->assertEquals('created_status', $status->activity[0]->type);
     }
 
-    public function liking_a_status()
+    public function test_liking_a_status()
     {
         $this->signIn();
 
         $status = factory(Status::class)->create();
 
-        $status->like();
+        $like = $status->like();
 
-        $this->assertCount(2, $status->activity);
-        $this->assertEquals('liked', $status->activity->last()->type);
+        $this->assertCount(1, $like->activity);
+        $this->assertEquals('created_like', $like->activity->last()->type);
     }
 
     public function pinning_a_status()
