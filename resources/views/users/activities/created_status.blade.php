@@ -1,13 +1,55 @@
-@component('profiles.activities.activity')
+@component('users.activities.activity')
     @slot('heading')
-        Created a status
+        <strong>
+            {{ $user->name }}
+        </strong>
+
+        <a href="{{ $user->path() }}">
+            {{ $user->username }}
+        </a>
+        -
+        <small>
+            {{ $record->created_at->toFormattedDateString() }}
+
+            @if( $record->updated_at->gt($record->created_at) )
+                | Modified on {{ $record->updated_at->toFormattedDateString() }}
+            @endif
+        </small>
     @endslot
 
     @slot('body')
-        body body body
+        {{ $record->subject->body }}
+
+        <p class="d-inline">
+            Tags:
+            <ul class="d-inline list-inline">
+                @foreach ($record->subject->tags as $tag)
+                    <li class="list-inline-item">
+                        <a href="{{ $tag->path() }}">
+                            {{ $tag->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </p>
     @endslot
 
     @slot('bottom')
-        Bottom bla ba
+        @if (url()->current() != 'http://laratweet.test' . $record->subject->path())
+            <a href="{{ $record->subject->path() }}" class="btn btn-info">Go to status</a>
+        @endif
+
+        <form method="POST" action="{{ $record->subject->path() }}/like" class="d-inline">
+            @csrf
+            @if( $record->subject->isLiked() )
+                <button type="submit" class="btn btn-danger">Unlike</button>
+            @else
+                <button type="submit" class="btn btn-success">Like</button>
+            @endif
+        </form>
+        <form method="POST" action="{{ $record->subject->path() }}/reply" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-primary">Reply</button>
+        </form>
     @endslot
 @endcomponent

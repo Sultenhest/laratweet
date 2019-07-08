@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Status;
+use App\Activity;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -72,6 +73,12 @@ class ManageStatusTest extends TestCase
             ->assertRedirect('/');
 
         $this->assertDatabaseMissing('statuses', $attributes);
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $status->id,
+            'subject_type' => get_class($status)
+        ]);
+
+        $this->assertEquals(0, Activity::count());
     }
 
     /** @test */

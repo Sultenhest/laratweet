@@ -18,6 +18,15 @@ class Status extends Model
         'pinned' => 'boolean'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($status) {
+            $status->likes->each->delete();
+        });
+    }
+
     public function path()
     {
         return "/status/{$this->id}";

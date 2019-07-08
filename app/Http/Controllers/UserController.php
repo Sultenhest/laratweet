@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Activity;
 use App\Achievement;
 
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class UserController extends Controller
         return view('users.show', [
             'user' => $user,
             'statuses' => $user->statuses,
-            'activities' => $this->getActivity($user),
+            'activities' => Activity::feed($user),
             'followers' => $user->followers,
             'following' => $user->following,
             'achievements' => Achievement::all(),
@@ -54,13 +55,6 @@ class UserController extends Controller
         $user->addFollower(auth()->user());
        
         return redirect($user->path());
-    }
-
-    protected function getActivity(User $user)
-    {
-        return $user->activity()->latest()->with('subject')->take(50)->get()->groupBy(function ($activity) {
-            return $activity->created_at->format('Y-m-d');
-        });
     }
 
     protected function validateRequest()
