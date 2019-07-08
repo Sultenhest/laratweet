@@ -3,6 +3,7 @@
 use App\Tag;
 use App\User;
 use App\Status;
+use App\RecordsActivity;
 
 use Faker\Factory as Faker;
 
@@ -26,7 +27,16 @@ class DatabaseSeeder extends Seeder
         foreach($users as $user) {
             $random = rand(25, 50);
 
-            factory(App\Status::class, $random)->create(['user_id' => $user->id])->each(function ($status, $tags) {
+            factory(App\Status::class, $random)->create([
+                'user_id' => $user->id
+            ])->each(function ($status, $tags) {
+                $status->user->activity()->create([
+                    'user_id' => $status->user->id,
+                    'subject_id' => $status->id,
+                    'subject_type' => 'App\Status',
+                    'type' => 'created_status',
+                ]);
+
                 $random = array();
                 for ($i = 0; $i <= rand(1, 10); $i++) {
                     $random[$i] = rand(1, 50);
