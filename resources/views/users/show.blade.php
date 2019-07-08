@@ -50,9 +50,17 @@
             </div>
 
             <div class="col-md-8">
+                @foreach($activities as $date => $activity)
+                    <h3 class="page-header">{{ $date }}</h3>
+                    @foreach($activity as $record)
+                        @include("users.activities.{$record->type}", ['activity' => $record])
+                    @endforeach
+                @endforeach
+                {{--
                 @foreach($statuses as $status)
                     @include('partials.status_card')
                 @endforeach
+                --}}
             </div>
         </div>
     </div>

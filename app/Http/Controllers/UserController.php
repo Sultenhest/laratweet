@@ -11,15 +11,26 @@ class UserController extends Controller
 {
     public function show(User $user)
     {
+        /*
         $statuses = $user->statuses;
+        $activities = $this->getActivity($user);
 
         $followers = $user->followers;
         $following = $user->following;
 
         $achievements = Achievement::all();
         $awarded_achievements = $user->achievements;
-
-        return view('users.show', compact('user', 'statuses', 'followers', 'following', 'achievements', 'awarded_achievements'));
+*/
+        return view('users.show', [
+            'user' => $user,
+            'statuses' => $user->statuses,
+            'activities' => $this->getActivity($user),
+            'followers' => $user->followers,
+            'following' => $user->following,
+            'achievements' => Achievement::all(),
+            'awarded_achievements' => $user->achievements
+        ]);
+        //,compact('user', 'statuses', 'activities', 'followers', 'following', 'achievements', 'awarded_achievements'));
     }
 
     public function edit(User $user)
@@ -43,6 +54,13 @@ class UserController extends Controller
         $user->addFollower(auth()->user());
        
         return redirect($user->path());
+    }
+
+    protected function getActivity(User $user)
+    {
+        return $user->activity()->latest()->with('subject')->take(50)->get()->groupBy(function ($activity) {
+            return $activity->created_at->format('Y-m-d');
+        });
     }
 
     protected function validateRequest()
