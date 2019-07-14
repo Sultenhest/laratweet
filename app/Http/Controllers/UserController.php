@@ -12,16 +12,6 @@ class UserController extends Controller
 {
     public function show(User $user)
     {
-        /*
-        $statuses = $user->statuses;
-        $activities = $this->getActivity($user);
-
-        $followers = $user->followers;
-        $following = $user->following;
-
-        $achievements = Achievement::all();
-        $awarded_achievements = $user->achievements;
-*/
         return view('users.show', [
             'user' => $user,
             'statuses' => $user->statuses,
@@ -31,7 +21,6 @@ class UserController extends Controller
             'achievements' => Achievement::all(),
             'awarded_achievements' => $user->achievements
         ]);
-        //,compact('user', 'statuses', 'activities', 'followers', 'following', 'achievements', 'awarded_achievements'));
     }
 
     public function edit(User $user)

@@ -9,7 +9,6 @@
                 </div>
 
                 @foreach($statuses as $status)
-                {{ $status->body }}
                     @include('partials.status_card')
                 @endforeach
 

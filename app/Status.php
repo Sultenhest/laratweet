@@ -62,4 +62,9 @@ class Status extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
+
+    public function usedTags()
+    {
+        return array_pluck($this->tags()->get()->toArray() , 'name');
+    }
 }

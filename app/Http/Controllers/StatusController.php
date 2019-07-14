@@ -19,7 +19,9 @@ class StatusController extends Controller
 
     public function create()
     {
-        return view('statuses.create');
+        return view('statuses.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     public function store(Request $request)
@@ -40,7 +42,10 @@ class StatusController extends Controller
 
     public function edit(Status $status)
     {
-        return view('statuses.edit', compact('status'));
+        return view('statuses.edit', [
+            'status' => $status,
+            'tags' => Tag::all()
+        ]);
     }
 
     public function update(Request $request, Status $status)
@@ -98,7 +103,7 @@ class StatusController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'body' => 'sometimes|required',
+            'body' => 'required',
             'tags' => 'sometimes|required'
         ]);
     }
