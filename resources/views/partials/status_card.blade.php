@@ -38,15 +38,9 @@
                 @if (url()->current() != 'http://laratweet.test' . $status->path())
                     <a href="{{ $status->path() }}" class="btn btn-info">Go to status</a>
                 @endif
+                
+                @include('partials.like_status')
 
-                <form method="POST" action="{{ $status->path() }}/like" class="d-inline">
-                    @csrf
-                    @if( $status->isLiked() )
-                        <button type="submit" class="btn btn-danger">Unlike</button>
-                    @else
-                        <button type="submit" class="btn btn-success">Like</button>
-                    @endif
-                </form>
                 <form method="POST" action="{{ $status->path() }}/reply" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-primary">Reply</button>

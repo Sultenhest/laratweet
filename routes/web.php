@@ -19,9 +19,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('status', 'StatusController');
 
     Route::patch('/status/{status}/pin', 'StatusController@pin');
-    Route::post('/status/{status}/like', 'LikeController@store');
-    Route::post('/status/{status}/unlike', 'LikeController@destroy');
     Route::post('/status/{status}/reply', 'StatusController@reply');
+
+    Route::post('/status/{status}/like', 'LikeController@like');
+    Route::post('/status/{status}/unlike', 'LikeController@unlike');
 
     Route::get('/tag', 'TagController@index');
     Route::get('/tag/{tag}', 'TagController@show');

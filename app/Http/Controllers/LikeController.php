@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    public function store(Status $status)
+    public function like(Status $status)
     {
         $status->like();
 
         return redirect($status->path());
     }
 
-    public function destroy(Status $status)
+    public function unlike(Status $status)
     {
         $status->unlike();
 

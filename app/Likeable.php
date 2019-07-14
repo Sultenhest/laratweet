@@ -24,9 +24,11 @@ trait Likeable
     {
         $attributes = ['user_id' => auth()->id()];
         
-        auth()->user()->stripExperience(10);
-        
-        return $this->likes()->where($attributes)->get()->each->delete();
+        if ($this->likes()->where($attributes)->exists()) {
+            auth()->user()->stripExperience(10);
+
+            return $this->likes()->where($attributes)->get()->each->delete();
+        }
     }
 
     public function isLiked()
