@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\User;
 use App\Activity;
 use App\Achievement;
@@ -15,6 +16,7 @@ class UserController extends Controller
         return view('users.show', [
             'user' => $user,
             'statuses' => $user->statuses,
+            'tags' => Tag::all(),
             'activities' => Activity::feed($user),
             'followers' => $user->followers,
             'following' => $user->following,
