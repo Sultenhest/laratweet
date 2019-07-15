@@ -18,7 +18,7 @@
     @endslot
 
     @slot('body')
-        <p>Liked the status:</p>
+        <p>Liked a status:</p>
         @component('users.activities.activity')
             @slot('heading')
                 <strong>
