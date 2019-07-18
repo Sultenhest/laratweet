@@ -9,7 +9,7 @@
                 </div>
 
                 @foreach($statuses as $status)
-                    @include('partials.status_card')
+                    @include('statuses.partials.status_card')
                 @endforeach
 
                 {{ $statuses->links() }}
