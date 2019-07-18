@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @include('partials.status_card')
+                @include('statuses.partials.status_card')
 
                 @foreach ($status->replies as $reply)
                     {{ $reply->body }}

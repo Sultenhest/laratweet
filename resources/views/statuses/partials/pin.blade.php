@@ -3,7 +3,7 @@
         @csrf
         @method('PATCH')
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-sm btn-primary">
             @if ($status->pinned)
                 Unpin
             @else

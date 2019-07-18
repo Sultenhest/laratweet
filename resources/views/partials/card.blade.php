@@ -4,12 +4,12 @@
             {{ $heading }}
         </h5>
 
-        <p>
+        <div>
             {{ $body }}
-        </p>
+        </div>
 
-        <p class="d-inline">
+        <div>
             {{ $bottom }}
-        </p>
+        </div>
     </div>
 </div>

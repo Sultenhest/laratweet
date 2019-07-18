@@ -25,7 +25,7 @@
 
                 <div>
                     <h4>Achievements</h4>
-                    @include('partials.achievements')
+                    @include('users.partials.achievements')
                 </div>
     
                 <div>
