@@ -13,12 +13,13 @@ class Activity extends Model
         return $this->morphTo();
     }
 
-    public static function feed($user, $take = 50)
+    public static function feed($user_ids = [], $take = 50)
     {
-        return static::where('user_id', $user->id)
+        return static::whereIn('user_id', $user_ids)
             ->latest()
             ->with('subject')
             ->take($take)
+            ->orderBy('created_at', 'desc')
             ->get()
             ->groupBy(function ($activity) {
                 return $activity->created_at->format('Y-m-d');

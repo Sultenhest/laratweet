@@ -17,7 +17,7 @@ class UserController extends Controller
             'user' => $user,
             'statuses' => $user->statuses,
             'tags' => Tag::all(),
-            'activities' => Activity::feed($user),
+            'activities' => Activity::feed([$user->id]),
             'followers' => $user->followers,
             'following' => $user->following,
             'achievements' => Achievement::all(),

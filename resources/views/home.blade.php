@@ -4,7 +4,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                Activity Feed Here
+                @foreach($activities as $date => $activity)
+                    <h3 class="page-header">{{ $date }}</h3>
+                    @foreach($activity as $record)
+                        @include("users.activities.{$record->type}", [
+                            'user' => $record->subject->user,
+                            'activity' => $record
+                        ])
+                    @endforeach
+                @endforeach
             </div>
 
             <div class="col-md-4">

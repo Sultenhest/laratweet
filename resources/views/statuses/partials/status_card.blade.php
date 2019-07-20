@@ -10,10 +10,10 @@
                     </a>
                 </div>
                 <small class="text-muted">
-                    {{ $status->created_at->toFormattedDateString() }}
+                    {{ $status->created_at->toDayDateTimeString() }}
 
                     @if( $status->updated_at->gt($status->created_at) )
-                        | Modified on {{ $status->updated_at->toFormattedDateString() }}
+                        | Modified on {{ $status->updated_at->toDayDateTimeString() }}
                     @endif
                 </small>
             </div>
@@ -38,10 +38,7 @@
         <div class="d-flex">
             @include('statuses.partials.like_status')
 
-            <form method="POST" action="{{ $status->path() }}/reply">
-                @csrf
-                <button type="submit" class="btn btn-sm  btn-primary">Reply</button>
-            </form>
+            <button type="submit" class="btn btn-sm  btn-primary">Reply</button>
 
             @include('statuses.partials.pin')
         </div>

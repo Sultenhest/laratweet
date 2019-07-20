@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Activity;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,18 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $statuses = DB::table('follows')
-            ->join('statuses', 'follows.followed_user_id', '=', 'statuses.user_id')
-            ->join('users', 'statuses.user_id', '=', 'users.id')
-            ->select('statuses.*', 'users.username', 'users.name')
-            ->where('follows.follower_user_id', '=', auth()->id())
-            ->latest()
-            ->limit(15)
-            ->get()
-            ->toArray();
+        $activities = Activity::feed(
+            auth()->user()->following->pluck('id')->push(auth()->id())
+        );
 
         $users = User::take(15)->get();
 
-        return view('home', compact('statuses', 'users'));
+        return view('home', compact('activities', 'users'));
     }
 }
