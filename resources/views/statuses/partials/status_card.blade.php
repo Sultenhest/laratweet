@@ -22,7 +22,17 @@
     @endslot
 
     @slot('body')
-        <p class="lead mb-0">{{ $status->body }}</p>
+        <p class="lead mb-0">
+            @if ($status->parent)
+                <small>Replying to
+                    <a href="{{ $status->parent->path() }}">
+                        {{ $status->parent->user->username }}'s status
+                    </a>
+                </small>
+                <br/>
+            @endif
+            {{ $status->body }}
+        </p>
 
         <p class="d-inline">
             Tags:
@@ -39,7 +49,7 @@
         <div class="d-flex">
             @include('statuses.partials.like_status')
 
-            <button type="submit" class="btn btn-sm btn-primary">Reply</button>
+            <a href="{{ $status->path() }}" class="btn btn-sm btn-primary">Reply</a>
 
             @include('statuses.partials.pin')
 

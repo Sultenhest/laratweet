@@ -10,6 +10,8 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 
+@import "timeline";
+
 $vue-multiselect-padding-x : $custom-select-padding-x !default;
 $vue-multiselect-padding-y : $custom-select-padding-y !default;
 $vue-multiselect-min-height : $custom-select-height !default;

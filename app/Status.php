@@ -50,7 +50,7 @@ class Status extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     public function replies()

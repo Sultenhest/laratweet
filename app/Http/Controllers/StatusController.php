@@ -37,7 +37,10 @@ class StatusController extends Controller
 
     public function show(Status $status)
     {
-        return view('statuses.show', compact('status'));
+        return view('statuses.show', [
+            'status' => $status,
+            'tags' => Tag::all()
+        ]);
     }
 
     public function edit(Status $status)
