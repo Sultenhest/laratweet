@@ -21,7 +21,6 @@
     @endslot
 
     @slot('body')
-
         <p class="lead mb-0">{{ $status->body }}</p>
 
         <p class="d-inline">
@@ -38,9 +37,13 @@
         <div class="d-flex">
             @include('statuses.partials.like_status')
 
-            <button type="submit" class="btn btn-sm  btn-primary">Reply</button>
+            <button type="submit" class="btn btn-sm btn-primary">Reply</button>
 
             @include('statuses.partials.pin')
+
+            @can('update', $status)
+                <a href="{{ $status->path() }}/edit" class="btn btn-sm btn-primary">Edit</a>
+            @endcan
         </div>
     @endslot
 @endcomponent

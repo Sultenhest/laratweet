@@ -51,15 +51,15 @@
 
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <div class="card-body" data-toggle="modal" data-target="#exampleModalLong">
+                    <div class="card-body" data-toggle="modal" data-target="#statusModal">
                         Add new status
                     </div>
 
-                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Create new status</h5>
+                                    <h5 class="modal-title" id="statusModalTitle">Create new status</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
