@@ -28,7 +28,8 @@
             Tags:
             <p class="d-inline">
                 @foreach ($status->tags as $tag)
-                    <a href="{{ $tag->path() }}">{{ $tag->name }}</a>,
+                    {{ $loop->first ? '' : ', ' }}
+                    <a href="{{ $tag->path() }}">{{ $tag->name }}</a>
                 @endforeach
             </p>
         </p>
