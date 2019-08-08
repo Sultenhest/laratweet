@@ -5,7 +5,7 @@
 @if( $status->isLiked() )
     <form method="POST" action="{{ $status->path() }}/unlike">
         @csrf
-        <button type="submit" class="btn btn-sm  btn-danger">Unlike</button>
+        <button type="submit" class="btn btn-sm btn-outline-success">Unlike</button>
     </form>
 @else
     <form method="POST" action="{{ $status->path() }}/like">

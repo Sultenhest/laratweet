@@ -18,6 +18,18 @@
                     @endif
                 </small>
             </div>
+
+            <div class="ml-auto">
+                <div class="d-flex">
+                    @include('statuses.partials.pin')
+
+                    @can('update', $status)
+                        <a href="{{ $status->path() }}/edit" class="btn btn-sm btn-primary">Edit</a>
+                    @endcan
+
+                    @include('statuses.partials.destroy_status')
+                </div>
+            </div>
         </div>
     @endslot
 
@@ -50,12 +62,6 @@
             @include('statuses.partials.like_status')
 
             @include('statuses.partials.reply_status')
-
-            @include('statuses.partials.pin')
-
-            @can('update', $status)
-                <a href="{{ $status->path() }}/edit" class="btn btn-sm btn-primary">Edit</a>
-            @endcan
         </div>
     @endslot
 @endcomponent
