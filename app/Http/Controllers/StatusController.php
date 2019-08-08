@@ -82,12 +82,14 @@ class StatusController extends Controller
         return redirect($status->path());
     }
 
-    public function reply(Status $status)
+    public function reply(Request $request, Status $status)
     {
         $reply = new Status($this->validateRequest());
         $reply->user_id = auth()->id();
 
         $status->replies()->save($reply);
+
+        $this->syncTags($request, $reply);
         
         auth()->user()->awardExperience(100);
 

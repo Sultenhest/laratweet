@@ -49,7 +49,7 @@
         <div class="d-flex">
             @include('statuses.partials.like_status')
 
-            <a href="{{ $status->path() }}" class="btn btn-sm btn-primary">Reply</a>
+            @include('statuses.partials.reply_status')
 
             @include('statuses.partials.pin')
 
