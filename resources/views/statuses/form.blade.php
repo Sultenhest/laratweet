@@ -16,9 +16,9 @@
 
 <div class="form-group row">
     <p class="col-md-2 col-form-label text-md-right">{{ __('Tags') }}</p>
-    
+
     <div class="col-md-10">
-        <tag-component :tags="{{ json_encode($tags) }}"/>
+        <tag-component :value="{{ json_encode($status->tags) }}" :tags="{{ json_encode($tags) }}"/>
     </div>
 </div>
 

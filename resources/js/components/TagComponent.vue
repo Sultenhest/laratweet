@@ -14,13 +14,8 @@
             Multiselect
         },
 
-        data () {
-            return {
-                value: '',
-            }
-        },
-
         props: {
+            value: Array,
             tags: Array
         },
 
@@ -30,8 +25,8 @@
                     name: newTag,
                     id: Math.floor((Math.random() * 10000000))
                 }
-                this.tags.push(tag)
                 this.value.push(tag)
+                this.tags.push(tag)
             }
         }
     }

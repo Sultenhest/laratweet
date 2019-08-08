@@ -1886,12 +1886,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a
   },
-  data: function data() {
-    return {
-      value: ''
-    };
-  },
   props: {
+    value: Array,
     tags: Array
   },
   methods: {
@@ -1900,8 +1896,8 @@ __webpack_require__.r(__webpack_exports__);
         name: newTag,
         id: Math.floor(Math.random() * 10000000)
       };
-      this.tags.push(tag);
       this.value.push(tag);
+      this.tags.push(tag);
     }
   }
 });
