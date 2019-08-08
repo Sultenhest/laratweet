@@ -1,7 +1,7 @@
 @component('partials.card')
     @slot('heading')
         <div class="d-flex">
-            <div style="width:44px; height:44px" class="bg-secondary rounded"></div>
+            <img src="{{url('/images/default.jpg')}}" width="50px" class="img-fluid img-thumbnail"/>
             <div class="ml-1">
                 <div class="mb-0">
                     {{ $record->subject->user->name }} - 

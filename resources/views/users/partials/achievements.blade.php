@@ -1,8 +1,8 @@
-<ul>
+<ul class="list-group mb-4">
     @foreach ($achievements as $achievement)
-        <li>
+        <li class="list-group-item">
             @if ($awarded_achievements->contains($achievement))
-                <strong>Awarded</strong>
+                <span class="badge badge-success">Awarded</span>
             @endif
             {{ $achievement->name }}
         </li>

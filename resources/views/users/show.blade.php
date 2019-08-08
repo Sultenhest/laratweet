@@ -5,12 +5,18 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div>
-                    <p>{{ $user->name }}</p>
-                    <p>{{ $user->username }}</p>
-                    <p>{{ $user->bio }}</p>
+                    <img src="{{url('/images/default.jpg')}}" class="img-fluid img-thumbnail"/>
+                    <div class="lead">
+                        <h1>
+                            {{ $user->name }} - 
+                            <small class="text-muted">{{ $user->username }}</small>
+                        </h1>
+                    </div>
 
-                   @can('canFollow', $user)                 
-                        <form method="POST" action="{{ $user->path() }}/follow">
+                    <p><strong>Biography: </strong>{{ $user->bio }}</p>
+
+                    @can('canFollow', $user)                 
+                        <form method="POST" action="{{ $user->path() }}/follow" class="mb-4">
                             @csrf
                             @if ($user->isFollowed())
                                 <button type="submit" class="btn btn-danger">Unfollow {{ $user->username }}</button>
@@ -21,10 +27,10 @@
                     @endcan
                 </div>
 
-                <p><strong>Experience Points:</strong> {{ $user->points }}</p>
-
                 <div>
                     <h4>Achievements</h4>
+
+                    <p><strong>Experience Points:</strong> {{ $user->points }}</p>
                     @include('users.partials.achievements')
                 </div>
     
