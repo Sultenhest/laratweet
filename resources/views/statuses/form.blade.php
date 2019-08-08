@@ -16,14 +16,9 @@
 
 <div class="form-group row">
     <p class="col-md-2 col-form-label text-md-right">{{ __('Tags') }}</p>
-
+    
     <div class="col-md-10">
-        @foreach($tags as $tag)
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->name }}"  {{ in_array($tag->name, $status->usedTags()) ? 'checked' : '' }}>
-                <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
-            </div>
-        @endforeach
+        <tag-component :tags="{{ json_encode($tags) }}"/>
     </div>
 </div>
 
