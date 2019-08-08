@@ -19,69 +19,100 @@
                         <form method="POST" action="{{ $user->path() }}/follow" class="mb-4">
                             @csrf
                             @if ($user->isFollowed())
-                                <button type="submit" class="btn btn-danger">Unfollow {{ $user->username }}</button>
+                                <button type="submit" class="btn btn-outline-primary btn-block">Unfollow {{ $user->username }}</button>
                             @else
-                                <button type="submit" class="btn btn-primary">Follow {{ $user->username }}</button>
+                                <button type="submit" class="btn btn-primary btn-block">Follow {{ $user->username }}</button>
                             @endif
                         </form>
                     @endcan
+
+                    @can('update', $user)
+                        <a href="{{ $user->path() }}/edit" class="mb-4 btn btn-primary btn-block">
+                            Update Profile
+                        </a>
+                    @endcan
                 </div>
 
-                <div>
-                    <h4>Achievements</h4>
+                @component('partials.card')
+                    @slot('heading')
+                        Achievements
+                    @endslot
 
-                    <p><strong>Experience Points:</strong> {{ $user->points }}</p>
-                    @include('users.partials.achievements')
-                </div>
-    
-                <div>
-                    <h4>Total followers: {{ count($followers) }}</h4>
-                    <p>
+                    @slot('body')
+                        @include('users.partials.achievements')
+                    @endslot
+
+                    @slot('bottom')
+                        <p class="mb-0"><strong>Experience Points:</strong> {{ $user->points }}</p>
+                    @endslot
+                @endcomponent
+
+                @component('partials.card')
+                    @slot('heading')
+                        Total followers: {{ count($followers) }}
+                    @endslot
+
+                    @slot('body')
                         @foreach ($user->followers as $follower)
+                            {{ $loop->first ? '' : ', ' }}
                             <a href="{{ $follower->path() }}">
                                 {{ $follower->username }}
-                            </a>,
+                            </a>
                         @endforeach
-                    </p>
-                </div>
+                    @endslot
 
-                <div>
-                    <h4>Total following: {{ count($following) }}</h4>
-                    @foreach ($user->following as $following)
-                        <a href="{{ $following->path() }}">
-                            {{ $following->username }}
-                        </a>,
-                    @endforeach
-                </div>
+                    @slot('bottom')
+                    @endslot
+                @endcomponent
+
+                @component('partials.card')
+                    @slot('heading')
+                        Total following: {{ count($following) }}
+                    @endslot
+
+                    @slot('body')
+                        @foreach ($user->following as $following)
+                            {{ $loop->first ? '' : ', ' }}
+                            <a href="{{ $following->path() }}">
+                                {{ $following->username }}
+                            </a>
+                        @endforeach
+                    @endslot
+
+                    @slot('bottom')
+                    @endslot
+                @endcomponent
             </div>
 
             <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body" data-toggle="modal" data-target="#statusModal">
-                        Add new status
-                    </div>
+                @can('update', $user)
+                    <div class="card mb-3">
+                        <div class="card-body" data-toggle="modal" data-target="#statusModal">
+                            Add new status
+                        </div>
 
-                    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="statusModalTitle">Create new status</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="/status">
-                                        @include('statuses.form', [
-                                            'status' => new App\Status,
-                                            'buttonText' => 'Create Status'
-                                        ])
-                                    </form>
+                        <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="statusModalTitle">Create new status</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="/status">
+                                            @include('statuses.form', [
+                                                'status' => new App\Status,
+                                                'buttonText' => 'Create Status'
+                                            ])
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endcan
 
                 @foreach($activities as $date => $activity)
                     <h3 class="page-header">{{ $date }}</h3>

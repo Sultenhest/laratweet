@@ -51,6 +51,7 @@ class UserController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
+            'name' => 'sometimes|required',
             'bio' => 'sometimes|required'
         ]);
     }

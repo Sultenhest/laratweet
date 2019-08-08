@@ -18,6 +18,23 @@ class ManageUserTest extends TestCase
         $this->get($user->path().'/edit')->assertRedirect('login');
     }
 
+    public function test_a_user_can_update_their_name()
+    {
+        $user = factory('App\User')->create();
+
+        $this->actingAs($user)
+            ->patch($user->path(), $attributes = [
+                'name' => $this->faker->username
+            ])
+            ->assertRedirect($user->path());
+
+        $user = $user->fresh();
+
+        $this->get($user->path() . '/edit')->assertOk();
+
+        $this->assertDatabaseHas('users', $attributes);
+    }
+
     public function test_a_user_can_update_their_info()
     {
         $user = factory('App\User')->create();
